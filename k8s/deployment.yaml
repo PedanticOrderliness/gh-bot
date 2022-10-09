@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gh-bot
+  labels:
+    app: gh-bot
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gh-bot
+  template:
+    metadata:
+      labels:
+        app: gh-bot
+    spec:
+      containers:
+      - name: bot
+        image: docker.pedanticorderliness.com/gh-bot:${TAG_NAME}
+        ports:
+        - containerPort: 80
+        env:
+          - name: BOT_ACCESS_TOKEN
+            valueFrom:
+              secretKeyRef:
+                name: gh-bot-token
+                key: botAccessToken
+      imagePullSecrets:
+        - name: regcred
+
