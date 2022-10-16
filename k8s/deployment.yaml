@@ -25,6 +25,14 @@ spec:
               secretKeyRef:
                 name: gh-bot-token
                 key: botAccessToken
+        volumeMounts:
+        - name: gh-bot-configmap
+          mountPath: /bot/.github-app-key.pem
+          subPath: github_app_key.pem
       imagePullSecrets:
         - name: regcred
+      volumes:
+        - name: gh-bot-configmap
+          configMap:
+            name: gh-bot-configmap
 
