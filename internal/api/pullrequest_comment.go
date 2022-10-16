@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/google/go-github/v45/github"
+	"github.com/sirupsen/logrus"
 )
 
 const (
@@ -37,6 +38,10 @@ func (a *API) PullRequestComment(w http.ResponseWriter, r *http.Request) {
 		writeResponse(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	logrus.WithFields(logrus.Fields{
+		"comment": comment,
+	}).Info("created comment")
 
 	writeResponse(w, http.StatusOK, "ok")
 }
