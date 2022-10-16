@@ -13,5 +13,5 @@ make install
 
 Run the bot:
 ```
-make run
+BOT_ACCESS_TOKEN=<token> make run
 ```

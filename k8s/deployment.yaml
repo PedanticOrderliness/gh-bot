@@ -18,7 +18,7 @@ spec:
       - name: bot
         image: docker.pedanticorderliness.com/gh-bot:${TAG_NAME}
         ports:
-        - containerPort: 80
+        - containerPort: 8080
         env:
           - name: BOT_ACCESS_TOKEN
             valueFrom:

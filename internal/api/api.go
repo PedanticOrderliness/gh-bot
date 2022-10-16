@@ -3,17 +3,20 @@ package api
 import (
 	"net/http"
 
+	"github.com/google/go-github/v45/github"
 	"github.com/ryanrolds/gh_bot/internal/config"
 	"github.com/sirupsen/logrus"
 )
 
 type API struct {
-	config *config.Config
+	config      *config.Config
+	ghAppClient *github.Client
 }
 
-func NewAPI(cfg *config.Config) *API {
+func NewAPI(cfg *config.Config, ghAppClient *github.Client) *API {
 	return &API{
-		config: cfg,
+		config:      cfg,
+		ghAppClient: ghAppClient,
 	}
 }
 

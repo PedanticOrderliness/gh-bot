@@ -4,11 +4,16 @@ TODO: Add Helm
 
 ### Secrets
 
-The service requires that an access token be configured.
+The service requires that an access token and GH App Key PEM file be configured.
 
 ```
 export BOT_ACCESS_TOKEN=$(echo -n <token> | base64 -w 0)
 envsubst < k8s/secrets.yaml | kubectl apply -f -
+```
+
+Replace `<key file>` in k8s/configmap.yaml
+```
+kubectl apply -f k8s/configmap.yaml
 ```
 
 ### Deploy

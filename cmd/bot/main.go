@@ -9,6 +9,7 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/ryanrolds/gh_bot/internal/api"
 	"github.com/ryanrolds/gh_bot/internal/config"
+	"github.com/ryanrolds/gh_bot/internal/githubapp"
 	"github.com/sirupsen/logrus"
 )
 
@@ -24,7 +25,12 @@ func main() {
 
 	initLogging()
 
-	a := api.NewAPI(cfg)
+	ghAppClient, err := githubapp.NewClient(cfg)
+	if err != nil {
+		log.Fatalf("problem creating github client: %s", err)
+	}
+
+	a := api.NewAPI(cfg, ghAppClient)
 	r := mux.NewRouter()
 
 	// TODO add request logging middleware
