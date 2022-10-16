@@ -1,8 +1,14 @@
 package client
 
+import "context"
+
 type Config struct {
 	host  string
 	token string
+}
+
+type Interface interface {
+	CommentOnPR(ctx context.Context, repo, comment string, issue int) error
 }
 
 type Client struct {
@@ -15,6 +21,6 @@ func New(cfg *Config) *Client {
 	}
 }
 
-func (c *Client) CommentOnPR(repo, comment string, issue int) error {
+func (c *Client) CommentOnPR(ctx context.Context, repo, comment string, issue int) error {
 	return nil
 }
