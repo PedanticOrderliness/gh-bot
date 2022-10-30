@@ -1,8 +1,10 @@
 package api
 
 import (
+	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 
 	"github.com/google/go-github/v45/github"
 	"github.com/sirupsen/logrus"
@@ -49,14 +51,22 @@ func (a *API) PullRequestComment(w http.ResponseWriter, r *http.Request) {
 func pullRequestCommentFromRequest(r *http.Request) (*pullRequestComment, error) {
 	qs := r.URL.Query()
 
-	repo := qs.Get("repo")
-	comment := qs.Get("comment")
+	fullRepo := qs.Get("repo")
+	repoParts := strings.Split(fullRepo, "/")
+	if len(repoParts) != 2 {
+		return nil, fmt.Errorf("invalid repo: %s", fullRepo)
+	}
+
+	owner := repoParts[0]
+	repo := repoParts[1]
 
 	issueRaw := qs.Get("issue")
 	issue, err := strconv.Atoi(issueRaw)
 	if err != nil {
 		return nil, err
 	}
+
+	comment := qs.Get("comment")
 
 	prc := pullRequestComment{
 		owner:   owner,
