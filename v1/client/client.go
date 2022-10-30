@@ -29,11 +29,11 @@ func New(client *http.Client, host, token string) *Client {
 	return c
 }
 
-func (c *Client) CommentOnPR(ctx context.Context, repo, comment string, issue int) error {
+func (c *Client) CommentOnPR(ctx context.Context, repo string, issue int, comment string) error {
 	params := url.Values{}
 	params.Add("repo", repo)
-	params.Add("comment", comment)
 	params.Add("issue", fmt.Sprintf("%d", issue))
+	params.Add("comment", comment)
 
 	uri := fmt.Sprintf("%s/pull_request/comment?%s", c.host, params.Encode())
 	req, err := http.NewRequest(http.MethodPost, uri, http.NoBody)
