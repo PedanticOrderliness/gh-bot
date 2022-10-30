@@ -10,10 +10,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-const (
-	owner = "ryanrolds"
-)
-
 type pullRequestComment struct {
 	owner   string
 	repo    string
@@ -53,6 +49,7 @@ func pullRequestCommentFromRequest(r *http.Request) (*pullRequestComment, error)
 
 	fullRepo := qs.Get("repo")
 	repoParts := strings.Split(fullRepo, "/")
+	// eslint-disable-next-line no-magic-numbers
 	if len(repoParts) != 2 {
 		return nil, fmt.Errorf("invalid repo: %s", fullRepo)
 	}
